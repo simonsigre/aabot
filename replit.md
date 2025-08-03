@@ -52,8 +52,10 @@ Preferred communication style: Simple, everyday language in British English.
 - **Token Management**: Secure app-level and bot token storage.
 
 ## Development and Build Pipeline
-- **Docker Support**: Multi-stage Docker builds with health checks and security hardening.
-- **Deployment**: Automated deployment script with Docker and Docker Compose.
+- **Docker Support**: Self-contained multi-stage Docker builds with automatic credential generation and health checks.
+- **Zero-Config Deployment**: Automated deployment script with Docker Compose requiring no environment variables.
+- **Random Security**: Automatic generation of secure 32-character database passwords using OpenSSL.
+- **Database Integration**: PostgreSQL container with persistent volumes and automatic schema initialization.
 - **Type Safety**: Shared TypeScript types between client and server.
 
 ## Performance and Scalability
