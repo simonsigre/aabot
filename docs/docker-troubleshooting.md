@@ -50,13 +50,23 @@ When database connection fails, configuration save operations return 500 errors 
 3. Storage operations timeout due to connection issues
 
 ### Resolution Steps:
-1. **Automatic Fix**: The application now detects Docker environment (`DOCKER_ENV=true`) and disables WebSocket automatically
-2. **Manual Override**: If issues persist, check that `DOCKER_ENV=true` is set in Docker environment
-3. **Connection Testing**: Use the enhanced database health checks to verify connectivity
-4. **Monitor Logs**: Check for `[DATABASE] Docker environment detected - disabling WebSocket for compatibility`
+1. **Automatic Fix**: The application now detects Docker environment (`DOCKER_ENV=true`) and completely disables WebSocket
+2. **HTTP Mode**: Forces HTTP connection mode with disabled pipeline connect and secure WebSocket
+3. **PgBouncer Bypass**: Disables PgBouncer to use direct database connections
+4. **Monitor Logs**: Check for `[DATABASE] Docker environment detected - using HTTP connection mode`
 
 ### Expected Behavior in Docker:
-- Application should show: `[DATABASE] Docker environment detected - disabling WebSocket for compatibility`
-- Database connections should use TCP instead of WebSocket
+- Application should show: `[DATABASE] Docker environment detected - using HTTP connection mode`
+- Database connections use HTTP instead of WebSocket protocol
 - Configuration save operations should return 200 responses instead of 500 errors
-- No more `connect ECONNREFUSED 172.25.0.2:443` errors on WebSocket connections
+- No more WebSocket connection errors or timeout failures
+- Health checks should pass with HTTP connections
+
+### Latest Fix Applied:
+The Docker configuration now includes:
+- `neonConfig.webSocketConstructor = undefined`
+- `neonConfig.pipelineConnect = false`
+- `neonConfig.useSecureWebSocket = false`
+- `neonConfig.forceDisablePgBouncer = true`
+
+This completely eliminates WebSocket usage and forces HTTP-only database connections.
