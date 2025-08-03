@@ -63,10 +63,10 @@ When database connection fails, configuration save operations return 500 errors 
 - Health checks should pass with HTTP connections
 
 ### Latest Fix Applied:
-The Docker configuration now includes:
-- `neonConfig.webSocketConstructor = undefined`
-- `neonConfig.pipelineConnect = false`
-- `neonConfig.useSecureWebSocket = false`
-- `neonConfig.forceDisablePgBouncer = true`
+The Docker configuration now uses a completely different database driver:
+- **Development**: Uses Neon serverless driver with WebSocket support
+- **Docker**: Uses standard PostgreSQL driver (`pg`) with direct TCP connections
+- **No WebSocket**: Docker environment bypasses all Neon-specific WebSocket logic
+- **Local Database**: Connects directly to PostgreSQL container without SSL
 
-This completely eliminates WebSocket usage and forces HTTP-only database connections.
+This eliminates the root cause by using the appropriate driver for each environment.

@@ -25,6 +25,8 @@ AABot v0.4.0 (Apache Answer Bot) is a production-ready full-stack web applicatio
 - Resolved "All attempts to open a WebSocket to connect to the database failed" errors in Docker deployment
 - Fixed Docker Compose version warning by removing obsolete version attribute
 - Added DOCKER_ENV=true to docker-compose.yml environment variables for automatic WebSocket disabling
+- Switched to standard PostgreSQL driver (pg) for Docker environment instead of Neon serverless driver
+- Eliminated WebSocket connection issues by using appropriate database driver for local PostgreSQL container
 
 # User Preferences
 
