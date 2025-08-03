@@ -224,15 +224,7 @@ export class SocketModeService {
     try {
       const searchResults = await this.apacheAnswerService.searchQuestions(query, 1, 10);
       
-      if (!searchResults || searchResults.length === 0) {
-        console.log(`[SOCKET] No results found for: ${query}`);
-        await this.sendErrorMessage(`No results found for "${query}". Try different keywords.`, body.response_url);
-        return;
-      }
-
-      console.log(`[SOCKET] Search completed, found ${searchResults.length} results`);
-
-      // Save search to database
+      // Save search to database REGARDLESS of result count
       try {
         await storage.logSlackQuestion({
           userId: body.user_id,
@@ -240,13 +232,21 @@ export class SocketModeService {
           query: query,
           channelId: body.channel_id,
           teamId: body.team_id,
-          resultCount: searchResults.length,
+          resultCount: searchResults?.length || 0,
           responseTime: Date.now() - startTime
         });
       } catch (dbError) {
         console.error('[SOCKET] Failed to log question to database:', dbError);
         // Continue processing even if database logging fails
       }
+      
+      if (!searchResults || searchResults.length === 0) {
+        console.log(`[SOCKET] No results found for: ${query}`);
+        await this.sendErrorMessage(`No results found for "${query}". Try different keywords.`, body.response_url);
+        return;
+      }
+
+      console.log(`[SOCKET] Search completed, found ${searchResults.length} results`);
 
       // Format and send results via response_url for delayed response
       console.log(`[SOCKET] Sending ${searchResults.length} results via response_url`);
