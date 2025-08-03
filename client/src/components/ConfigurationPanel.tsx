@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Settings, Eye, EyeOff, Save, AlertCircle } from "lucide-react";
+import { BotControlPanel } from "./BotControlPanel";
 
 interface BotConfiguration {
   id: string;
@@ -341,5 +342,14 @@ export function ConfigurationPanel() {
         </form>
       </CardContent>
     </Card>
+  );
+}
+
+export function ConfigurationPanelWithBotControl() {
+  return (
+    <div className="space-y-6">
+      <ConfigurationPanel />
+      <BotControlPanel />
+    </div>
   );
 }

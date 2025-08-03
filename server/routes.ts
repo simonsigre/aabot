@@ -15,7 +15,7 @@ import {
 } from "./security";
 
 import { BUILD_INFO } from "@shared/version";
-import { getSocketModeStatus } from "./services/socketModeService";
+import { getSocketModeStatus, getGlobalSocketModeService, ensureGlobalSocketModeService } from "./services/socketModeService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -330,6 +330,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
         overall: false,
         ...errorResponse
       });
+    }
+  });
+
+  // Start bot (bring online)
+  app.post("/api/bot/start", async (req, res) => {
+    try {
+      const socketService = ensureGlobalSocketModeService();
+      await socketService.start();
+      
+      auditLog('BOT_STARTED', { timestamp: new Date().toISOString() }, req);
+      
+      res.json({ 
+        success: true, 
+        message: "Bot started successfully",
+        connected: socketService.isConnected()
+      });
+    } catch (error) {
+      console.error("Error starting bot:", sanitiseError(error));
+      auditLog('BOT_START_ERROR', { error: sanitiseError(error) }, req);
+      const errorResponse = createErrorResponse(error, "Failed to start bot");
+      res.status(500).json(errorResponse);
+    }
+  });
+
+  // Stop bot (take offline)
+  app.post("/api/bot/stop", async (req, res) => {
+    try {
+      const socketService = getGlobalSocketModeService();
+      if (socketService) {
+        await socketService.stop();
+      }
+      
+      auditLog('BOT_STOPPED', { timestamp: new Date().toISOString() }, req);
+      
+      res.json({ 
+        success: true, 
+        message: "Bot stopped successfully",
+        connected: false
+      });
+    } catch (error) {
+      console.error("Error stopping bot:", sanitiseError(error));
+      auditLog('BOT_STOP_ERROR', { error: sanitiseError(error) }, req);
+      const errorResponse = createErrorResponse(error, "Failed to stop bot");
+      res.status(500).json(errorResponse);
     }
   });
 

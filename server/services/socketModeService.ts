@@ -417,11 +417,37 @@ export class SocketModeService {
     if (this.socketModeClient) {
       try {
         await this.socketModeClient.disconnect();
-        console.log('[SOCKET] Socket Mode client disconnected');
+        this.socketModeClient = null;
+        this.webClient = null;
+        this.apacheAnswerService = null;
+        console.log('[SOCKET] Socket Mode client disconnected and cleaned up');
+        auditLog('socket_disconnected', { timestamp: new Date().toISOString() });
       } catch (error) {
         console.error('[SOCKET] Error disconnecting Socket Mode client:', error);
+        throw error;
       }
     }
+  }
+
+  async start(): Promise<void> {
+    if (this.socketModeClient) {
+      console.log('[SOCKET] Socket Mode client already running');
+      return;
+    }
+    
+    console.log('[SOCKET] Starting Socket Mode client...');
+    await this.initialize();
+  }
+
+  isConnected(): boolean {
+    return this.socketModeClient !== null;
+  }
+
+  getStatus(): { connected: boolean; hasConfig: boolean } {
+    return {
+      connected: this.socketModeClient !== null,
+      hasConfig: this.webClient !== null && this.apacheAnswerService !== null
+    };
   }
 }
 
@@ -451,4 +477,15 @@ export function initializeGlobalSocketMode(): void {
   globalSocketModeService.initialize().catch(error => {
     console.error('[STARTUP] Failed to initialize Socket Mode:', error);
   });
+}
+
+export function getGlobalSocketModeService(): SocketModeService | null {
+  return globalSocketModeService;
+}
+
+export function ensureGlobalSocketModeService(): SocketModeService {
+  if (!globalSocketModeService) {
+    globalSocketModeService = new SocketModeService();
+  }
+  return globalSocketModeService;
 }

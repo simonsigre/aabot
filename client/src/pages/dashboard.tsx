@@ -1,5 +1,5 @@
 import { BotStatusCard } from "@/components/BotStatusCard";
-import { ConfigurationPanel } from "@/components/ConfigurationPanel";
+import { ConfigurationPanelWithBotControl } from "@/components/ConfigurationPanel";
 import { SearchDemo } from "@/components/SearchDemo";
 import { SearchResults } from "@/components/SearchResults";
 import { AnalyticsSection } from "@/components/AnalyticsSection";
@@ -82,7 +82,7 @@ export default function Dashboard() {
           {/* Left Column: Bot Configuration */}
           <div className="lg:col-span-1 space-y-6">
             <BotStatusCard />
-            <ConfigurationPanel />
+            <ConfigurationPanelWithBotControl />
           </div>
 
           {/* Right Column: Live Demo & Search Results */}
