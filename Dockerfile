@@ -7,9 +7,9 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install production dependencies only
+# Install production dependencies and drizzle-kit for migrations
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production && npm install drizzle-kit && npm cache clean --force
 
 # Rebuild the source code only when needed
 FROM base AS builder

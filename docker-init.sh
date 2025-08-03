@@ -19,7 +19,7 @@ echo "✅ Database is ready!"
 
 # Run database migrations
 echo "🔄 Running database migrations..."
-npm run db:push
+npx drizzle-kit push
 
 echo "🎉 Database initialized successfully!"
 
