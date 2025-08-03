@@ -6,8 +6,14 @@ import { setupVite, serveStatic, log } from "./vite";
 import { sanitiseLogData, securityHeaders, createErrorResponse } from "./security";
 import { VERSION, BUILD_INFO } from "@shared/version";
 import { initializeGlobalSocketMode } from "./services/socketModeService";
+import { runDockerDiagnostics } from "./utils/dockerDiagnostics";
 
 const app = express();
+
+// Run diagnostics in Docker environment
+if (process.env.NODE_ENV === 'production' || process.env.DOCKER_ENV) {
+  runDockerDiagnostics();
+}
 
 // Trust proxy configuration for rate limiting
 // In development, we don't need to trust proxy

@@ -104,21 +104,49 @@ export class DatabaseStorage implements IStorage {
 
   private async encryptConfiguration(config: ConfigurationUpdate, salt: string): Promise<Partial<BotConfiguration>> {
     try {
-      return {
+      console.log('[STORAGE] Encrypting configuration fields:', Object.keys(config));
+      
+      const encrypted: Partial<BotConfiguration> = {
         workspaceName: config.workspaceName,
         searchLimit: config.searchLimit,
         enableVoting: config.enableVoting,
-        apacheAnswerApiUrl: config.apacheAnswerApiUrl ? encryptionService.encrypt(config.apacheAnswerApiUrl, salt) : undefined,
-        apacheAnswerApiKey: config.apacheAnswerApiKey ? encryptionService.encrypt(config.apacheAnswerApiKey, salt) : undefined,
-        slackBotToken: config.slackBotToken ? encryptionService.encrypt(config.slackBotToken, salt) : undefined,
-        slackAppToken: config.slackAppToken ? encryptionService.encrypt(config.slackAppToken, salt) : undefined,
-        slackChannelId: config.slackChannelId ? encryptionService.encrypt(config.slackChannelId, salt) : undefined,
-        slackSigningSecret: config.slackSigningSecret ? encryptionService.encrypt(config.slackSigningSecret, salt) : undefined,
         encryptionSalt: salt,
       };
+
+      // Encrypt sensitive fields only if they have values
+      if (config.apacheAnswerApiUrl) {
+        console.log('[STORAGE] Encrypting apacheAnswerApiUrl');
+        encrypted.apacheAnswerApiUrl = encryptionService.encrypt(config.apacheAnswerApiUrl, salt);
+      }
+      if (config.apacheAnswerApiKey) {
+        console.log('[STORAGE] Encrypting apacheAnswerApiKey');
+        encrypted.apacheAnswerApiKey = encryptionService.encrypt(config.apacheAnswerApiKey, salt);
+      }
+      if (config.slackBotToken) {
+        console.log('[STORAGE] Encrypting slackBotToken');
+        encrypted.slackBotToken = encryptionService.encrypt(config.slackBotToken, salt);
+      }
+      if (config.slackAppToken) {
+        console.log('[STORAGE] Encrypting slackAppToken');
+        encrypted.slackAppToken = encryptionService.encrypt(config.slackAppToken, salt);
+      }
+      if (config.slackChannelId) {
+        console.log('[STORAGE] Encrypting slackChannelId');
+        encrypted.slackChannelId = encryptionService.encrypt(config.slackChannelId, salt);
+      }
+      if (config.slackSigningSecret) {
+        console.log('[STORAGE] Encrypting slackSigningSecret');
+        encrypted.slackSigningSecret = encryptionService.encrypt(config.slackSigningSecret, salt);
+      }
+      
+      return encrypted;
     } catch (error) {
       console.error('[STORAGE] Failed to encrypt configuration:', error);
-      throw new Error('Configuration encryption failed');
+      console.error('[STORAGE] Encryption error details:', {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      throw new Error(`Configuration encryption failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -134,9 +162,12 @@ export class DatabaseStorage implements IStorage {
     const salt = encryptionService.generateSalt();
     
     // Test encryption before proceeding
+    console.log('[STORAGE] Testing encryption service');
     if (!encryptionService.testEncryption(salt)) {
+      console.error('[STORAGE] Encryption test failed');
       throw new Error('Encryption test failed - cannot create configuration');
     }
+    console.log('[STORAGE] Encryption test passed');
 
     const encryptedConfig = await this.encryptConfiguration(config, salt);
     
@@ -157,37 +188,56 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateBotConfiguration(config: ConfigurationUpdate): Promise<DecryptedBotConfiguration> {
-    // Get existing config or create default
-    let existing = await this.getBotConfiguration();
-    
-    if (!existing) {
-      const defaultConfig: ConfigurationUpdate = {
-        workspaceName: "Apache Team",
-        apacheAnswerApiUrl: process.env.APACHE_ANSWER_API_URL || "https://meta.answer.dev",
-        apacheAnswerApiKey: process.env.APACHE_ANSWER_API_KEY || "",
-        slackBotToken: process.env.SLACK_BOT_TOKEN || "",
-        slackAppToken: process.env.SLACK_APP_TOKEN || "",
-        slackChannelId: process.env.SLACK_CHANNEL_ID || "",
-        slackSigningSecret: process.env.SLACK_SIGNING_SECRET || "",
-        searchLimit: parseInt(process.env.SEARCH_RESULT_LIMIT || "10"),
-        enableVoting: true,
-      };
-      return this.createBotConfiguration(defaultConfig);
+    try {
+      console.log('[STORAGE] Starting updateBotConfiguration with:', Object.keys(config));
+      
+      // Get existing config or create default
+      let existing = await this.getBotConfiguration();
+      console.log('[STORAGE] Found existing config:', existing ? 'yes' : 'no');
+      
+      if (!existing) {
+        console.log('[STORAGE] No existing config, creating default');
+        const defaultConfig: ConfigurationUpdate = {
+          workspaceName: "Apache Team",
+          apacheAnswerApiUrl: process.env.APACHE_ANSWER_API_URL || "https://meta.answer.dev",
+          apacheAnswerApiKey: process.env.APACHE_ANSWER_API_KEY || "",
+          slackBotToken: process.env.SLACK_BOT_TOKEN || "",
+          slackAppToken: process.env.SLACK_APP_TOKEN || "",
+          slackChannelId: process.env.SLACK_CHANNEL_ID || "",
+          slackSigningSecret: process.env.SLACK_SIGNING_SECRET || "",
+          searchLimit: parseInt(process.env.SEARCH_RESULT_LIMIT || "10"),
+          enableVoting: true,
+        };
+        return this.createBotConfiguration(defaultConfig);
+      }
+
+      console.log('[STORAGE] Getting encryption salt from database');
+      // Get the raw config to access encryption salt
+      const [rawConfig] = await db.select().from(botConfigurations).limit(1);
+      const salt = rawConfig?.encryptionSalt || encryptionService.generateSalt();
+      console.log('[STORAGE] Salt available:', !!salt);
+
+      console.log('[STORAGE] Encrypting configuration update');
+      const encryptedUpdate = await this.encryptConfiguration(config, salt);
+      console.log('[STORAGE] Configuration encrypted successfully');
+
+      console.log('[STORAGE] Updating database record');
+      const [updated] = await db
+        .update(botConfigurations)
+        .set({ ...encryptedUpdate, updatedAt: new Date() })
+        .where(eq(botConfigurations.id, existing.id))
+        .returning();
+      
+      console.log('[STORAGE] Database updated, decrypting result');
+      const result = this.decryptConfiguration(updated);
+      console.log('[STORAGE] Configuration update completed successfully');
+      
+      return result;
+    } catch (error) {
+      console.error('[STORAGE] Error in updateBotConfiguration:', error);
+      console.error('[STORAGE] Error stack:', error instanceof Error ? error.stack : 'No stack');
+      throw error;
     }
-
-    // Get the raw config to access encryption salt
-    const [rawConfig] = await db.select().from(botConfigurations).limit(1);
-    const salt = rawConfig?.encryptionSalt || encryptionService.generateSalt();
-
-    const encryptedUpdate = await this.encryptConfiguration(config, salt);
-
-    const [updated] = await db
-      .update(botConfigurations)
-      .set({ ...encryptedUpdate, updatedAt: new Date() })
-      .where(eq(botConfigurations.id, existing.id))
-      .returning();
-    
-    return this.decryptConfiguration(updated);
   }
 
   async getSearchResults(limit: number = 50): Promise<SearchResult[]> {

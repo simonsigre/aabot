@@ -33,12 +33,21 @@ export class EncryptionService {
       throw new Error('Encryption salt is required');
     }
     
-    // Use a combination of salt and application identifier as passphrase
-    const passphrase = `AABot-${salt}-${process.env.DATABASE_URL?.slice(-10) || 'default'}`;
-    
-    return createHash('sha256')
-      .update(passphrase)
-      .digest();
+    try {
+      // Use a combination of salt and application identifier as passphrase
+      const dbUrlSuffix = process.env.DATABASE_URL?.slice(-10) || 'default';
+      const passphrase = `AABot-${salt}-${dbUrlSuffix}`;
+      
+      const key = createHash('sha256')
+        .update(passphrase)
+        .digest();
+        
+      console.log('[ENCRYPTION] Master key derived successfully');
+      return key;
+    } catch (error) {
+      console.error('[ENCRYPTION] Failed to derive master key:', error);
+      throw new Error('Key derivation failed');
+    }
   }
 
   /**
@@ -100,11 +109,16 @@ export class EncryptionService {
    */
   testEncryption(salt: string): boolean {
     try {
+      console.log('[ENCRYPTION] Starting encryption test');
       const testValue = 'test-encryption-value';
+      console.log('[ENCRYPTION] Test value prepared');
       const encrypted = this.encrypt(testValue, salt);
+      console.log('[ENCRYPTION] Test encryption completed, encrypted length:', encrypted.length);
       const decrypted = this.decrypt(encrypted, salt);
-      
-      return decrypted === testValue;
+      console.log('[ENCRYPTION] Test decryption completed');
+      const success = decrypted === testValue;
+      console.log('[ENCRYPTION] Test result:', success);
+      return success;
     } catch (error) {
       console.error('[ENCRYPTION] Test failed:', error);
       return false;

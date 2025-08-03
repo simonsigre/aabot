@@ -233,14 +233,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update bot configuration
   app.patch("/api/bot/config", async (req, res) => {
     try {
+      console.log('[API] Configuration update request received');
       const updates = req.body;
+      console.log('[API] Update keys:', Object.keys(updates));
       
       // Validate required fields if provided
       if (updates.searchLimit && (updates.searchLimit < 1 || updates.searchLimit > 50)) {
+        console.log('[API] Invalid search limit:', updates.searchLimit);
         return res.status(400).json({ message: "Search limit must be between 1 and 50" });
       }
 
+      console.log('[API] Calling storage.updateBotConfiguration');
       const updatedConfig = await storage.updateBotConfiguration(updates);
+      console.log('[API] Configuration updated successfully');
       
       auditLog('CONFIG_UPDATE', { 
         updates: Object.keys(updates),
@@ -249,10 +254,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(updatedConfig);
     } catch (error) {
-      console.error("Error updating configuration:", sanitiseError(error));
+      console.error("Error updating configuration:", error);
+      console.error("Full error details:", { 
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        name: error instanceof Error ? error.name : undefined
+      });
       auditLog('CONFIG_UPDATE_ERROR', { 
         error: sanitiseError(error),
-        updates: Object.keys(req.body || {})
+        updates: Object.keys(req.body || {}),
+        errorDetails: {
+          message: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined
+        }
       }, req);
       const errorResponse = createErrorResponse(error, "Failed to update configuration");
       res.status(500).json(errorResponse);
