@@ -19,7 +19,7 @@ This will:
 - Generate secure random database credentials
 - Start PostgreSQL and AABot containers
 - Create encrypted configuration storage
-- Set up the web interface at http://localhost:5000
+- Set up the web interface at http://localhost:5004
 
 ## 📋 Configuration
 
@@ -28,7 +28,7 @@ AABot uses **encrypted database storage** for all configuration. No environment 
 ### Web Interface Configuration
 After deployment, configure AABot through the web dashboard:
 
-1. **Navigate to** http://localhost:5000
+1. **Navigate to** http://localhost:5004
 2. **Configure Apache Answer**:
    - API URL: Your Apache Answer instance URL
    - API Key: Your Apache Answer API key

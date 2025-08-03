@@ -29,6 +29,7 @@ That's it! The script will:
 - Build and start PostgreSQL and AABot containers
 - Initialize the database with proper schema
 - Set up encrypted configuration storage
+- Make the application available at http://localhost:5004
 
 ## Deployment Commands
 
@@ -58,7 +59,7 @@ The `docker-deploy.sh` script supports several commands:
 
 ### Initial Setup
 
-1. **Access the dashboard**: Navigate to `http://localhost:5000`
+1. **Access the dashboard**: Navigate to `http://localhost:5004`
 
 2. **Configure Apache Answer**:
    - API URL: Your Apache Answer instance URL
@@ -115,7 +116,7 @@ docker-compose logs -f postgres
 
 ### Health Check
 ```bash
-curl http://localhost:5000/api/bot/status
+curl http://localhost:5004/api/bot/status
 ```
 
 ## Troubleshooting
@@ -132,9 +133,9 @@ curl http://localhost:5000/api/bot/status
    docker logs aabot-postgres
    ```
 
-3. Ensure port 5000 is available:
+3. Ensure port 5004 is available:
    ```bash
-   lsof -i :5000
+   lsof -i :5004
    ```
 
 ### Database Connection Issues
@@ -151,7 +152,7 @@ curl http://localhost:5000/api/bot/status
 
 ### Configuration Issues
 
-1. Access the configuration panel at `http://localhost:5000`
+1. Access the configuration panel at `http://localhost:5004`
 2. Verify all required fields are filled
 3. Test connections using the status page
 
@@ -167,12 +168,12 @@ To use an external PostgreSQL database instead of the containerized one:
 
 ### Port Configuration
 
-To change the default port (5000):
+To change the default port (5004):
 
 1. Edit `docker-compose.yml`:
    ```yaml
    ports:
-     - "8080:5000"  # Change 8080 to your desired port
+     - "8080:5000"  # Change 8080 to your desired external port
    ```
 
 2. Update the health check URL in deployment scripts

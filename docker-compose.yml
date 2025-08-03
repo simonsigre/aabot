@@ -6,7 +6,7 @@ services:
     container_name: aabot-app
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5004:5000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://aabot:${POSTGRES_PASSWORD}@postgres:5432/aabot

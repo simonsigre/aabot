@@ -12,7 +12,7 @@ echo "=================================="
 IMAGE_NAME="aabot"
 TAG="latest"
 CONTAINER_NAME="aabot-container"
-PORT="5000"
+PORT="5004"
 
 # Function to print coloured output
 print_status() {
