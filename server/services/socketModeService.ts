@@ -455,20 +455,12 @@ export class SocketModeService {
 let globalSocketModeService: SocketModeService | null = null;
 
 // Export function to get Socket Mode status (for routes)
-export function getSocketModeStatus(): { connected: boolean; error?: string } {
-  try {
-    if (!process.env.SLACK_APP_TOKEN || !process.env.SLACK_BOT_TOKEN) {
-      return { connected: false, error: 'Slack credentials not configured' };
-    }
-    
-    if (!globalSocketModeService) {
-      return { connected: false, error: 'Socket Mode service not initialized' };
-    }
-    
-    return { connected: (globalSocketModeService as any).socketModeClient !== null };
-  } catch (error) {
-    return { connected: false, error: 'Error checking Socket Mode status' };
+export async function getSocketModeStatus(): Promise<boolean> {
+  if (!globalSocketModeService) {
+    return false;
   }
+  
+  return (globalSocketModeService as any).socketModeClient !== null;
 }
 
 // Export function to initialize and set global instance

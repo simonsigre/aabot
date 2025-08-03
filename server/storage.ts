@@ -201,15 +201,22 @@ export class DatabaseStorage implements IStorage {
   async createSearchResult(result: InsertSearchResult): Promise<SearchResult> {
     const resultToInsert = {
       id: randomUUID(),
-      ...result,
-      tags: result.tags ? Array.isArray(result.tags) ? result.tags : [result.tags] : [],
+      questionId: result.questionId,
+      title: result.title,
+      snippet: result.snippet,
+      votes: result.votes || 0,
+      answers: result.answers || 0,
+      tags: result.tags ? (Array.isArray(result.tags) ? result.tags as string[] : [String(result.tags)]) : [],
+      author: result.author,
+      views: result.views || 0,
+      accepted: result.accepted || false,
+      url: result.url,
       createdAt: new Date(),
-      updatedAt: new Date(),
     };
 
     const [created] = await db
       .insert(searchResults)
-      .values([resultToInsert])
+      .values(resultToInsert)
       .returning();
     return created;
   }

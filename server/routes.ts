@@ -303,16 +303,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       );
       const apacheAnswerConnected = await apacheAnswerService.testConnection();
 
-      // Check Slack connection and Socket Mode
-      const slackBotTokenConfigured = !!process.env.SLACK_BOT_TOKEN;
-      const slackAppTokenConfigured = !!process.env.SLACK_APP_TOKEN;
-      const slackChannelConfigured = !!process.env.SLACK_CHANNEL_ID;
-      const socketModeConnected = getSocketModeStatus();
+      // Check Slack connection and Socket Mode using database configuration
+      const slackBotTokenConfigured = !!config.slackBotToken;
+      const slackAppTokenConfigured = !!config.slackAppToken;
+      const slackChannelConfigured = !!config.slackChannelId;
+      const socketModeConnected = await getSocketModeStatus();
       
       // For Socket Mode, we only need app token and bot token
-      const slackConnected = slackBotTokenConfigured && slackAppTokenConfigured;
+      const slackCredentialsConfigured = slackBotTokenConfigured && slackAppTokenConfigured;
 
-      const overallStatus = apacheAnswerConnected && slackConnected && socketModeConnected;
+      const overallStatus = apacheAnswerConnected && slackCredentialsConfigured && socketModeConnected;
 
       res.json({
         overall: overallStatus,
@@ -321,13 +321,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           url: config.apacheAnswerApiUrl
         },
         slack: {
-          credentialsConfigured: slackConnected,
+          credentialsConfigured: slackCredentialsConfigured,
           botTokenConfigured: slackBotTokenConfigured,
           appTokenConfigured: slackAppTokenConfigured,
           channelConfigured: slackChannelConfigured,
           socketModeConnected: socketModeConnected,
           apiWorking: socketModeConnected,
-          channelId: process.env.SLACK_CHANNEL_ID || null
+          channelId: config.slackChannelId || null
         },
         workspace: config.workspaceName
       });
