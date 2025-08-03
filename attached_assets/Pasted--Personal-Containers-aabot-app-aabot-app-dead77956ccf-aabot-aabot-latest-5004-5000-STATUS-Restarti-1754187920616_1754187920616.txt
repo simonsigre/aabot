@@ -1,0 +1,121 @@
+
+Personal
+
+Containers
+aabot-app
+
+aabot-app
+dead77956ccf
+aabot-aabot:latest
+5004:5000
+STATUS
+Restarting
+
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+🔧 AABot Docker Initialization
+
+==============================
+
+⏳ Waiting for database to be ready...
+
+postgres:5432 - accepting connections
+
+✅ Database is ready!
+
+🔄 Running database migrations...
+
+No config path provided, using default 'drizzle.config.ts'
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+🔧 AABot Docker Initialization
+
+==============================
+
+⏳ Waiting for database to be ready...
+
+postgres:5432 - accepting connections
+
+✅ Database is ready!
+
+🔄 Running database migrations...
+
+No config path provided, using default 'drizzle.config.ts'
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+🔧 AABot Docker Initialization
+
+==============================
+
+⏳ Waiting for database to be ready...
+
+postgres:5432 - accepting connections
+
+✅ Database is ready!
+
+🔄 Running database migrations...
+
+No config path provided, using default 'drizzle.config.ts'
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+🔧 AABot Docker Initialization
+
+==============================
+
+⏳ Waiting for database to be ready...
+
+postgres:5432 - accepting connections
+
+✅ Database is ready!
+
+🔄 Running database migrations...
+
+No config path provided, using default 'drizzle.config.ts'
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+🔧 AABot Docker Initialization
+
+==============================
+
+⏳ Waiting for database to be ready...
+
+postgres:5432 - accepting connections
+
+✅ Database is ready!
+
+🔄 Running database migrations...
+
+No config path provided, using default 'drizzle.config.ts'
+
+Reading config file '/app/drizzle.config.ts'
+
+Error  No schema files found for path config ['./shared/schema.ts']
+
+Error  If path represents a file - please make sure to use .ts or other extension in the path
+
+

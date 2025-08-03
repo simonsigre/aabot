@@ -40,6 +40,7 @@ RUN adduser --system --uid 1001 aabot
 COPY --from=builder --chown=aabot:nodejs /app/dist ./dist
 COPY --from=builder --chown=aabot:nodejs /app/package.json ./package.json
 COPY --from=builder --chown=aabot:nodejs /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder --chown=aabot:nodejs /app/shared ./shared
 
 # Copy production node_modules
 COPY --from=deps --chown=aabot:nodejs /app/node_modules ./node_modules
