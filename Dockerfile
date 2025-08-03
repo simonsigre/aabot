@@ -44,8 +44,8 @@ COPY --from=builder --chown=aabot:nodejs /app/drizzle.config.ts ./drizzle.config
 # Copy production node_modules
 COPY --from=deps --chown=aabot:nodejs /app/node_modules ./node_modules
 
-# Copy initialization script and make it executable
-COPY --chown=aabot:nodejs docker-init.sh ./docker-init.sh
+# Copy initialization script from builder stage and make it executable
+COPY --from=builder --chown=aabot:nodejs /app/docker-init.sh ./docker-init.sh
 RUN chmod +x ./docker-init.sh
 
 USER aabot
@@ -59,4 +59,4 @@ ENV HOST=0.0.0.0
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/api/bot/status', (res) => process.exit(res.statusCode === 200 ? 0 : 1))"
 
-CMD ["sh", "-c", "./docker-init.sh"]
+CMD ["sh", "-c", "ls -la && pwd && ./docker-init.sh"]
