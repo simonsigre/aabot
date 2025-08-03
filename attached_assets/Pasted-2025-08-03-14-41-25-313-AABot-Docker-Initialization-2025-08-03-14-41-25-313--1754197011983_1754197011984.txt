@@ -1,0 +1,190 @@
+2025-08-03 14:41:25.313 | 🔧 AABot Docker Initialization
+2025-08-03 14:41:25.313 | ==============================
+2025-08-03 14:41:25.313 | ⏳ Waiting for database to be ready...
+2025-08-03 14:41:25.319 | postgres:5432 - accepting connections
+2025-08-03 14:41:25.319 | ✅ Database is ready!
+2025-08-03 14:41:25.319 | 🔄 Running database migrations...
+2025-08-03 14:41:25.619 | No config path provided, using default 'drizzle.config.ts'
+2025-08-03 14:41:25.620 | Reading config file '/app/drizzle.config.ts'
+2025-08-03 14:41:25.760 | Using 'pg' driver for database querying
+2025-08-03 14:41:25.796 | [⣷] Pulling schema from database...
+2025-08-03 14:41:25.814 | [✓] Pulling schema from database...
+2025-08-03 14:41:25.832 | [✓] Changes applied
+2025-08-03 14:41:25.837 | npm notice
+2025-08-03 14:41:25.837 | npm notice New major version of npm available! 10.8.2 -> 11.5.2
+2025-08-03 14:41:25.837 | npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.5.2
+2025-08-03 14:41:25.837 | npm notice To update run: npm install -g npm@11.5.2
+2025-08-03 14:41:25.837 | npm notice
+2025-08-03 14:41:25.840 | 🎉 Database initialized successfully!
+2025-08-03 14:41:25.840 | 🚀 Starting AABot application...
+2025-08-03 14:41:26.031 | [DATABASE] Docker environment detected - using standard PostgreSQL driver
+2025-08-03 14:41:26.032 | [DATABASE] Standard PostgreSQL driver configured for Docker
+2025-08-03 14:41:26.034 | === Docker Environment Diagnostics ===
+2025-08-03 14:41:26.034 | Environment Check:
+2025-08-03 14:41:26.034 | - NODE_ENV: production
+2025-08-03 14:41:26.034 | - DATABASE_URL present: true
+2025-08-03 14:41:26.034 | - Database URL suffix: 5432/aabot
+2025-08-03 14:41:26.034 | Crypto Check:
+2025-08-03 14:41:26.034 | - randomBytes working: true
+2025-08-03 14:41:26.034 | File System Check:
+2025-08-03 14:41:26.037 | - File system write/read: OK
+2025-08-03 14:41:26.037 | Memory Check:
+2025-08-03 14:41:26.038 | - Memory usage (MB): { rss: 91, heapTotal: 35, heapUsed: 22, external: 5 }
+2025-08-03 14:41:26.038 | === End Diagnostics ===
+2025-08-03 14:41:26.050 | 4:41:26 AM [express] AABot v0.4.0 serving on port 5000
+2025-08-03 14:41:26.050 | [STARTUP] AABot v0.4.0 - Apache Answer Slack Integration
+2025-08-03 14:41:26.050 | [STARTUP] Waiting for database connection...
+2025-08-03 14:41:26.050 | [DB_HEALTH] Database connection attempt 1/10
+2025-08-03 14:41:26.050 | [DB_HEALTH] Starting database health check
+2025-08-03 14:41:26.050 | [DB_HEALTH] Database URL present: true
+2025-08-03 14:41:26.050 | [DB_HEALTH] Database URL format: postgresql://aabot:T...
+2025-08-03 14:41:26.061 | [DB_HEALTH] Query result: Result {
+2025-08-03 14:41:26.061 |   command: 'SELECT',
+2025-08-03 14:41:26.061 |   rowCount: 1,
+2025-08-03 14:41:26.061 |   oid: null,
+2025-08-03 14:41:26.061 |   rows: [ { health_check: 1 } ],
+2025-08-03 14:41:26.061 |   fields: [
+2025-08-03 14:41:26.061 |     Field {
+2025-08-03 14:41:26.061 |       name: 'health_check',
+2025-08-03 14:41:26.061 |       tableID: 0,
+2025-08-03 14:41:26.061 |       columnID: 0,
+2025-08-03 14:41:26.061 |       dataTypeID: 23,
+2025-08-03 14:41:26.061 |       dataTypeSize: 4,
+2025-08-03 14:41:26.061 |       dataTypeModifier: -1,
+2025-08-03 14:41:26.061 |       format: 'text'
+2025-08-03 14:41:26.061 |     }
+2025-08-03 14:41:26.061 |   ],
+2025-08-03 14:41:26.061 |   _parsers: [ [Function: parseInteger] ],
+2025-08-03 14:41:26.061 |   _types: { getTypeParser: [Function: getTypeParser] },
+2025-08-03 14:41:26.061 |   RowCtor: null,
+2025-08-03 14:41:26.061 |   rowAsArray: false,
+2025-08-03 14:41:26.061 |   _prebuiltEmptyResultObject: { health_check: null }
+2025-08-03 14:41:26.061 | }
+2025-08-03 14:41:26.061 | [DB_HEALTH] Database health check passed
+2025-08-03 14:41:26.061 | [DB_HEALTH] Database is ready
+2025-08-03 14:41:26.061 | [SOCKET] Initializing Socket Mode service...
+2025-08-03 14:41:26.063 | [SOCKET] Configuration loaded: false
+2025-08-03 14:41:26.063 | [SOCKET] Tokens available: { appToken: false, botToken: false }
+2025-08-03 14:41:26.063 | [SOCKET] Slack tokens not configured in database or environment, skipping Socket Mode initialization
+2025-08-03 14:41:26.484 | ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
+2025-08-03 14:41:26.484 |     at Object.trustProxy (file:///app/node_modules/express-rate-limit/dist/index.mjs:317:13)
+2025-08-03 14:41:26.484 |     at wrappedValidations.<computed> [as trustProxy] (file:///app/node_modules/express-rate-limit/dist/index.mjs:577:22)
+2025-08-03 14:41:26.484 |     at Object.keyGenerator (file:///app/node_modules/express-rate-limit/dist/index.mjs:678:20)
+2025-08-03 14:41:26.484 |     at file:///app/node_modules/express-rate-limit/dist/index.mjs:737:32
+2025-08-03 14:41:26.484 |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-08-03 14:41:26.484 |     at async file:///app/node_modules/express-rate-limit/dist/index.mjs:718:5 {
+2025-08-03 14:41:26.484 |   code: 'ERR_ERL_PERMISSIVE_TRUST_PROXY',
+2025-08-03 14:41:26.484 |   help: 'https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/'
+2025-08-03 14:41:26.484 | }
+2025-08-03 14:41:26.491 | 4:41:26 AM [express] GET /api/bot/status 500 in 10ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:30.403 | 4:41:30 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:35.489 | 4:41:35 AM [express] GET /api/bot/status 500 in 2ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:40.573 | 4:41:40 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:45.663 | 4:41:45 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:50.723 | 4:41:50 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:41:55.799 | 4:41:55 AM [express] GET /api/bot/status 500 in 2ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:42:00.889 | 4:42:00 AM [express] GET /api/bot/status 500 in 2ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:42:05.977 | 4:42:05 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:42:36.067 | 4:42:36 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:43:06.147 | 4:43:06 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:43:36.242 | 4:43:36 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:44:06.351 | 4:44:06 AM [express] GET /api/bot/status 500 in 8ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:44:36.445 | 4:44:36 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:45:06.528 | 4:45:06 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:45:36.618 | 4:45:36 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:46:06.712 | 4:46:06 AM [express] GET /api/bot/status 500 in 7ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:46:36.792 | 4:46:36 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:47:06.880 | 4:47:06 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:47:36.937 | 4:47:36 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:48:07.036 | 4:48:07 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:48:37.118 | 4:48:37 AM [express] GET /api/bot/status 500 in 7ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:49:07.213 | 4:49:07 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:49:37.295 | 4:49:37 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:50:07.392 | 4:50:07 AM [express] GET /api/bot/status 500 in 8ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:50:37.496 | 4:50:37 AM [express] GET /api/bot/status 500 in 8ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:51:07.588 | 4:51:07 AM [express] GET /api/bot/status 500 in 7ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:51:37.670 | 4:51:37 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:52:07.768 | 4:52:07 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:52:37.867 | 4:52:37 AM [express] GET /api/bot/status 500 in 7ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:53:07.940 | 4:53:07 AM [express] GET /api/bot/status 500 in 5ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:53:38.044 | 4:53:38 AM [express] GET /api/bot/status 500 in 7ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:54:08.194 | 4:54:08 AM [express] GET /api/bot/status 500 in 14ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:54:38.328 | 4:54:38 AM [express] GET /api/bot/status 500 in 15ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:55:08.436 | 4:55:08 AM [express] GET /api/bot/status 500 in 6ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:55:28.806 | 4:55:28 AM [express] GET /api/bot/status 500 in 19ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:55:28.810 | 4:55:28 AM [express] GET /api/bot/analytics 200 in 26ms :: {"id":"c868f75d-8202-4685-a16a-506ee71fb9…
+2025-08-03 14:55:28.812 | 4:55:28 AM [express] GET /api/bot/config 200 in 21ms
+2025-08-03 14:55:28.812 | 4:55:28 AM [express] GET /api/commands 304 in 18ms :: {}
+2025-08-03 14:55:38.533 | 4:55:38 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:55:58.849 | 4:55:58 AM [express] GET /api/bot/status 500 in 9ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:55:58.849 | 4:55:58 AM [express] GET /api/commands 304 in 9ms :: {}
+2025-08-03 14:56:08.623 | 4:56:08 AM [express] GET /api/bot/status 500 in 1ms :: {"message":"Bot configuration not found"}
+2025-08-03 14:56:08.631 | [API] Configuration update request received
+2025-08-03 14:56:08.631 | [API] Update keys: [
+2025-08-03 14:56:08.631 |   'apacheAnswerApiUrl',
+2025-08-03 14:56:08.631 |   'workspaceName',
+2025-08-03 14:56:08.631 |   'searchLimit',
+2025-08-03 14:56:08.631 |   'apacheAnswerApiKey',
+2025-08-03 14:56:08.631 |   'slackBotToken',
+2025-08-03 14:56:08.631 |   'slackAppToken',
+2025-08-03 14:56:08.631 |   'slackChannelId',
+2025-08-03 14:56:08.631 |   'slackSigningSecret'
+2025-08-03 14:56:08.631 | ]
+2025-08-03 14:56:08.631 | [API] Docker environment detected - validating configuration
+2025-08-03 14:56:08.631 | [API] Database connection available: true
+2025-08-03 14:56:08.631 | [API] Testing database connection...
+2025-08-03 14:56:08.632 | [API] Database connection test passed
+2025-08-03 14:56:08.632 | [API] Calling storage.updateBotConfiguration
+2025-08-03 14:56:08.632 | [STORAGE] Starting updateBotConfiguration with: [
+2025-08-03 14:56:08.632 |   'apacheAnswerApiUrl',
+2025-08-03 14:56:08.632 |   'workspaceName',
+2025-08-03 14:56:08.632 |   'searchLimit',
+2025-08-03 14:56:08.632 |   'apacheAnswerApiKey',
+2025-08-03 14:56:08.632 |   'slackBotToken',
+2025-08-03 14:56:08.632 |   'slackAppToken',
+2025-08-03 14:56:08.632 |   'slackChannelId',
+2025-08-03 14:56:08.632 |   'slackSigningSecret'
+2025-08-03 14:56:08.632 | ]
+2025-08-03 14:56:08.632 | [STORAGE] Found existing config: no
+2025-08-03 14:56:08.632 | [STORAGE] No existing config, creating default
+2025-08-03 14:56:08.633 | [STORAGE] Testing encryption service
+2025-08-03 14:56:08.633 | [ENCRYPTION] Starting encryption test
+2025-08-03 14:56:08.633 | [ENCRYPTION] Test value prepared
+2025-08-03 14:56:08.633 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:08.633 | [ENCRYPTION] Test encryption completed, encrypted length: 106
+2025-08-03 14:56:08.633 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:08.633 | [ENCRYPTION] Test decryption completed
+2025-08-03 14:56:08.633 | [ENCRYPTION] Test result: true
+2025-08-03 14:56:08.633 | [STORAGE] Encryption test passed
+2025-08-03 14:56:08.633 | [STORAGE] Encrypting configuration fields: [
+2025-08-03 14:56:08.633 |   'workspaceName',
+2025-08-03 14:56:08.633 |   'apacheAnswerApiUrl',
+2025-08-03 14:56:08.633 |   'apacheAnswerApiKey',
+2025-08-03 14:56:08.633 |   'slackBotToken',
+2025-08-03 14:56:08.633 |   'slackAppToken',
+2025-08-03 14:56:08.633 |   'slackChannelId',
+2025-08-03 14:56:08.633 |   'slackSigningSecret',
+2025-08-03 14:56:08.633 |   'searchLimit',
+2025-08-03 14:56:08.633 |   'enableVoting'
+2025-08-03 14:56:08.633 | ]
+2025-08-03 14:56:08.633 | [STORAGE] Encrypting apacheAnswerApiUrl
+2025-08-03 14:56:08.633 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:08.636 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:08.636 | [API] Configuration updated successfully
+2025-08-03 14:56:08.636 | [AUDIT] {"timestamp":"2025-08-03T04:56:08.636Z","event":"CONFIG_UPDATE","ip":"151.101.2.132","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36","details":{"updates":{"0":"apacheAnswerApiUrl","1":"workspaceName","2":"searchLimit","3":"apacheAnswerApiKey","4":"slackBotToken","5":"slackAppToken","6":"slackChannelId","7":"slackSigningSecret"},"workspaceName":"Apache Team"}}
+2025-08-03 14:56:08.636 | 4:56:08 AM [express] PATCH /api/bot/config 200 in 6ms :: {"id":"2671c630-862a-400a-9cfe-5dec41db8c9a…
+2025-08-03 14:56:08.642 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:08.642 | 4:56:08 AM [express] GET /api/bot/config 200 in 1ms :: {"id":"2671c630-862a-400a-9cfe-5dec41db8c9a",…
+2025-08-03 14:56:08.643 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:09.141 | [API] Connection successful using path: /api/v1/question/page
+2025-08-03 14:56:09.143 | 4:56:09 AM [express] GET /api/bot/status 200 in 501ms :: {"overall":false,"apacheAnswer":{"connected…
+2025-08-03 14:56:18.497 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:18.507 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:18.508 | 4:56:18 AM [express] GET /api/bot/config 304 in 7ms :: {"id":"2671c630-862a-400a-9cfe-5dec41db8c9a",…
+2025-08-03 14:56:18.512 | 4:56:18 AM [express] GET /api/bot/analytics 304 in 17ms :: {"id":"c868f75d-8202-4685-a16a-506ee71fb9…
+2025-08-03 14:56:18.519 | 4:56:18 AM [express] GET /api/commands 304 in 17ms :: {}
+2025-08-03 14:56:18.845 | [API] Connection successful using path: /api/v1/question/page
+2025-08-03 14:56:18.847 | 4:56:18 AM [express] GET /api/bot/status 304 in 353ms :: {"overall":false,"apacheAnswer":{"connected…
+2025-08-03 14:56:38.725 | [ENCRYPTION] Master key derived successfully
+2025-08-03 14:56:39.084 | [API] Connection successful using path: /api/v1/question/page
+2025-08-03 14:56:39.087 | 4:56:39 AM [express] GET /api/bot/status 200 in 366ms :: {"overall":false,"apacheAnswer":{"connected…
