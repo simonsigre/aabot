@@ -328,11 +328,12 @@ export function ConfigurationPanel() {
           </div>
 
           {/* Save Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-6">
             <Button
               type="submit"
               disabled={updateConfig.isPending}
-              className="bg-slack-purple text-white hover:bg-slack-purple/90"
+              className="bg-slack-purple text-white hover:bg-slack-purple/90 px-6 py-2"
+              style={{display: 'block', visibility: 'visible'}}
             >
               <Save className="h-4 w-4 mr-2" />
               {updateConfig.isPending ? "Saving..." : "Save Configuration"}
