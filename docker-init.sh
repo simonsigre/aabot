@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # AABot Docker Initialization Script
 # This script initializes the database and migrates configuration on first run
