@@ -224,7 +224,7 @@ export function auditLog(event: string, details: any, req?: Request) {
 This security implementation addresses:
 - **OWASP Top 10 2021** compliance
 - **Basic security hygiene** practices
-- **Replit platform** security requirements
+- **Platform** security requirements
 - **Slack API security** best practices
 - **Apache Answer integration** security
 

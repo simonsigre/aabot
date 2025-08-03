@@ -32,7 +32,6 @@ app.use(helmet({
 const allowedOrigins = process.env.NODE_ENV === 'production' 
   ? [
       process.env.FRONTEND_URL,
-      process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null,
     ].filter(Boolean)
   : true;
 

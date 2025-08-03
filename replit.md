@@ -3,11 +3,16 @@
 AABot v0.4.0 (Apache Answer Bot) is a production-ready full-stack web application integrating Apache Answer knowledge bases with Slack. It enables users to search Apache Answer content directly from Slack via slash commands, featuring result voting and analytics. The application includes a React dashboard for real-time configuration, search demonstrations, and analytics visualization with fully functional encrypted configuration storage. Its core purpose is to streamline access to knowledge base content within team communication workflows, enhancing information retrieval and leveraging Apache Answer's capabilities.
 
 ## Recent Changes (v0.4.0 - August 2025)
+- Added bot online/offline control functionality with "Bring Bot Online" and "Take Bot Offline" buttons
+- Implemented start/stop API endpoints (/api/bot/start and /api/bot/stop) for WebSocket connection management
+- Enhanced SocketModeService with proper cleanup and connection state management
+- Fixed button width overflow issues in bot control panel with standardised sizing
+- Cleaned up unused migration scripts and test files for better project organisation
+- Removed platform-specific references and ensured British English throughout the codebase
+- Consolidated documentation structure with proper organisation in /docs folder
 - Fixed critical Slack Questions Log bug where commands with 0 results weren't being saved to database
 - Resolved Docker deployment issues with proper Alpine Linux shell script compatibility and schema file copying
 - Changed Docker deployment port from 5000 to 5004 to avoid development server conflicts
-- Fixed Bot Configuration UI button visibility issue with proper contrast styling
-- Achieved zero-configuration Docker deployment with automatic credential generation
 - Enhanced database integration with comprehensive health checks and proper container dependencies
 
 # User Preferences
@@ -19,7 +24,7 @@ Preferred communication style: Simple, everyday language in British English.
 ## Frontend Architecture
 - **Framework**: React 18 with TypeScript and Vite.
 - **UI Components**: Radix UI primitives and shadcn/ui.
-- **Styling**: Tailwind CSS with custom design tokens and Slack brand colors.
+- **Styling**: Tailwind CSS with custom design tokens and Slack brand colours.
 - **State Management**: TanStack Query for server state management.
 - **Routing**: Wouter for client-side routing.
 - **Form Handling**: React Hook Form with Zod validation.

@@ -28,7 +28,7 @@ This guide will help you set up AABot (Apache Answer Bot) in your Slack workspac
 
 ## Step 3: Configure Environment Variables
 
-Add these to your Replit secrets:
+Add these to your environment variables:
 
 ```
 SLACK_APP_TOKEN=xapp-1-AXXXXXXXX-XXXXXXXXX-your-actual-token-here
@@ -54,7 +54,7 @@ This is essential because Socket Mode uses WebSocket, not HTTP URLs.
 
 ## Step 5: Test the Setup
 
-1. Restart your Replit application
+1. Restart your application
 2. Check logs for: `[SOCKET] AABot v0.3.0 connected to Slack via Socket Mode`
 3. In Slack, try: `/aabot-search how to reset password`
 4. You should see search results from Apache Answer
@@ -90,7 +90,7 @@ This is essential because Socket Mode uses WebSocket, not HTTP URLs.
 ## Support
 
 If you continue having issues:
-1. Check the application logs in Replit console
+1. Check the application logs in the console
 2. Verify all environment variables are set correctly
 3. Ensure the Apache Answer instance is accessible
 4. Try recreating the Slack app if problems persist

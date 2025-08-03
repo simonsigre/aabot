@@ -110,20 +110,20 @@ export function BotControlPanel() {
             <Button
               onClick={() => startBot.mutate()}
               disabled={isStarting || isSocketConnected || !hasConfiguration}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+              className="w-32 bg-green-600 hover:bg-green-700 text-white text-sm"
             >
-              <Play className="h-4 w-4 mr-2" />
-              {isStarting ? "Starting..." : "Bring Bot Online"}
+              <Play className="h-4 w-4 mr-1" />
+              {isStarting ? "Starting..." : "Online"}
             </Button>
             
             <Button
               onClick={() => stopBot.mutate()}
               disabled={isStopping || !isSocketConnected}
               variant="destructive"
-              className="flex-1"
+              className="w-32 text-sm"
             >
-              <Square className="h-4 w-4 mr-2" />
-              {isStopping ? "Stopping..." : "Take Bot Offline"}
+              <Square className="h-4 w-4 mr-1" />
+              {isStopping ? "Stopping..." : "Offline"}
             </Button>
           </div>
 
@@ -143,7 +143,7 @@ export function BotControlPanel() {
               <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
               <div className="text-sm text-blue-800">
                 <p className="font-medium">Ready to Start</p>
-                <p>Your bot is configured and ready to connect to Slack.</p>
+                <p>Your bot is organised and ready to connect to Slack.</p>
               </div>
             </div>
           )}
