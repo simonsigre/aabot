@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   aabot:
     build: .
@@ -9,6 +7,7 @@ services:
       - "5004:5000"
     environment:
       - NODE_ENV=production
+      - DOCKER_ENV=true
       - DATABASE_URL=postgresql://aabot:${POSTGRES_PASSWORD}@postgres:5432/aabot
     depends_on:
       postgres:
