@@ -4,11 +4,19 @@ import ws from "ws";
 import * as schema from "@shared/schema";
 
 // Configure WebSocket constructor for Neon
-neonConfig.webSocketConstructor = ws;
+// In Docker environments, WebSocket connections might fail due to network restrictions
+if (process.env.NODE_ENV === 'production' && process.env.DOCKER_ENV) {
+  console.log('[DATABASE] Docker environment detected - disabling WebSocket for compatibility');
+  // Don't use WebSocket in Docker to avoid connection issues
+  neonConfig.webSocketConstructor = undefined;
+} else {
+  console.log('[DATABASE] Using WebSocket constructor for Neon');
+  neonConfig.webSocketConstructor = ws;
+}
 
 // Add connection retry logic for Docker environments
 if (process.env.NODE_ENV === 'production') {
-  console.log('[DATABASE] Configuring for Docker production environment');
+  console.log('[DATABASE] Configuring for production environment');
   neonConfig.fetchConnectionCache = true;
 }
 

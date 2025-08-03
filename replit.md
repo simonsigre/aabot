@@ -19,6 +19,8 @@ AABot v0.4.0 (Apache Answer Bot) is a production-ready full-stack web applicatio
 - Resolved TypeScript import issues in Docker production builds
 - Enhanced database connection handling for Docker deployments with proper error handling and timeout configuration
 - Added database connectivity pre-checks for configuration update operations
+- Implemented Docker-specific WebSocket connection handling to resolve 'wss://postgres/v2' connection errors
+- Created comprehensive Docker troubleshooting documentation for database connectivity issues
 
 # User Preferences
 

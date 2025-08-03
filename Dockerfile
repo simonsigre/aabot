@@ -29,6 +29,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV DOCKER_ENV=true
 
 # Install postgresql-client for pg_isready
 RUN apk add --no-cache postgresql-client

@@ -258,7 +258,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error('[API] Database connection test failed:', dbError);
           return res.status(500).json({ 
             message: "Database connection unavailable",
-            error: process.env.NODE_ENV === 'development' ? String(dbError) : 'Internal server error'
+            error: String(dbError)
           });
         }
       }
