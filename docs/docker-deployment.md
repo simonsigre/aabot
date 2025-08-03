@@ -1,4 +1,4 @@
-# Docker Deployment Guide
+# AABot v0.4.0 Docker Deployment Guide
 
 This guide covers deploying AABot using Docker with automatically generated secure credentials.
 

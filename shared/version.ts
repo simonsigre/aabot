@@ -1,7 +1,7 @@
 /**
  * Centralized version management for AABot
  */
-export const VERSION = "0.3.0" as const;
+export const VERSION = "0.4.0" as const;
 
 export const BUILD_INFO = {
   version: VERSION,

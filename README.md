@@ -1,4 +1,4 @@
-# AABot - Apache Answer Slack Integration
+# AABot v0.4.0 - Apache Answer Slack Integration
 
 A sophisticated Slack bot that provides seamless integration with Apache Answer knowledge bases, enabling teams to search and interact with content directly from Slack channels.
 

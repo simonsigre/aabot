@@ -1,6 +1,6 @@
 # Overview
 
-AABot (Apache Answer Bot) is a full-stack web application integrating Apache Answer knowledge bases with Slack. It enables users to search Apache Answer content directly from Slack via slash commands, featuring result voting and analytics. The application includes a React dashboard for real-time configuration, search demonstrations, and analytics visualization. Its core purpose is to streamline access to knowledge base content within team communication workflows, enhancing information retrieval and leveraging Apache Answer's capabilities.
+AABot v0.4.0 (Apache Answer Bot) is a full-stack web application integrating Apache Answer knowledge bases with Slack. It enables users to search Apache Answer content directly from Slack via slash commands, featuring result voting and analytics. The application includes a React dashboard for real-time configuration, search demonstrations, and analytics visualization. Its core purpose is to streamline access to knowledge base content within team communication workflows, enhancing information retrieval and leveraging Apache Answer's capabilities.
 
 # User Preferences
 
