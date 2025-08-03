@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBotConfigurationSchema, insertSlackCommandSchema } from "@shared/schema";
+import type { ConfigurationUpdate } from "./storage";
 import { ApacheAnswerService } from "./services/apacheAnswerService";
 import { sendSearchResults, sendErrorMessage, sendSlackMessage } from "./services/slackService";
 import { 
@@ -42,12 +43,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update bot configuration
   app.put("/api/bot/config", async (req, res) => {
     try {
-      const validatedData = insertBotConfigurationSchema.parse(req.body);
-      const config = await storage.updateBotConfiguration(validatedData);
+      // Parse and clean the request body
+      const parsedData = insertBotConfigurationSchema.parse(req.body);
+      
+      // Convert null values to undefined for our ConfigurationUpdate interface
+      const cleanedData: ConfigurationUpdate = Object.fromEntries(
+        Object.entries(parsedData).map(([key, value]) => [key, value === null ? undefined : value])
+      ) as ConfigurationUpdate;
+      
+      const config = await storage.updateBotConfiguration(cleanedData);
       
       auditLog('CONFIG_UPDATE', {
-        updated_fields: Object.keys(validatedData),
-        workspace: validatedData.workspaceName
+        updated_fields: Object.keys(cleanedData),
+        workspace: cleanedData.workspaceName
       }, req);
       
       res.json(config);

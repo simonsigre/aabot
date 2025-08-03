@@ -140,9 +140,17 @@ export class DatabaseStorage implements IStorage {
 
     const encryptedConfig = await this.encryptConfiguration(config, salt);
     
+    const configToInsert = {
+      id: randomUUID(),
+      workspaceName: encryptedConfig.workspaceName || "Apache Team",
+      ...encryptedConfig,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
     const [created] = await db
       .insert(botConfigurations)
-      .values(encryptedConfig)
+      .values([configToInsert])
       .returning();
     
     return this.decryptConfiguration(created);
@@ -191,9 +199,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createSearchResult(result: InsertSearchResult): Promise<SearchResult> {
+    const resultToInsert = {
+      id: randomUUID(),
+      ...result,
+      tags: result.tags ? Array.isArray(result.tags) ? result.tags : [result.tags] : [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
     const [created] = await db
       .insert(searchResults)
-      .values(result)
+      .values([resultToInsert])
       .returning();
     return created;
   }
