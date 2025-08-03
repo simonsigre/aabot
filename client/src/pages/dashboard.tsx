@@ -96,7 +96,9 @@ export default function Dashboard() {
         <AnalyticsSection />
         
         {/* Slack Questions Log */}
-        <SlackQuestionsLog />
+        <div className="mt-8">
+          <SlackQuestionsLog />
+        </div>
 
         {/* Installation Instructions */}
         <Card className="mt-8">
