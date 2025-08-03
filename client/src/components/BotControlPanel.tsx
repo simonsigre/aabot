@@ -16,9 +16,10 @@ export function BotControlPanel() {
   const [isStopping, setIsStopping] = useState(false);
 
   const startBot = useMutation({
-    mutationFn: () => apiRequest('/api/bot/start', 'POST'),
+    mutationFn: () => apiRequest('POST', '/api/bot/start', {}),
     onMutate: () => setIsStarting(true),
-    onSuccess: (data: any) => {
+    onSuccess: async (response: Response) => {
+      const data = await response.json();
       toast({
         title: "Bot Started",
         description: data.message || "The bot has been brought online successfully",
@@ -36,9 +37,10 @@ export function BotControlPanel() {
   });
 
   const stopBot = useMutation({
-    mutationFn: () => apiRequest('/api/bot/stop', 'POST'),
+    mutationFn: () => apiRequest('POST', '/api/bot/stop', {}),
     onMutate: () => setIsStopping(true),
-    onSuccess: (data: any) => {
+    onSuccess: async (response: Response) => {
+      const data = await response.json();
       toast({
         title: "Bot Stopped",
         description: data.message || "The bot has been taken offline successfully",
