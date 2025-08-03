@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { db } from "./db";
 import { insertBotConfigurationSchema, insertSlackCommandSchema } from "@shared/schema";
 import type { ConfigurationUpdate } from "./storage";
 import { ApacheAnswerService } from "./services/apacheAnswerService";
@@ -247,7 +248,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (process.env.NODE_ENV === 'production') {
         console.log('[API] Docker environment detected - validating configuration');
         console.log('[API] Database connection available:', !!process.env.DATABASE_URL);
-        console.log('[API] Environment validation passed');
+        
+        // Test database connectivity before attempting update
+        try {
+          console.log('[API] Testing database connection...');
+          await db.execute('SELECT 1');
+          console.log('[API] Database connection test passed');
+        } catch (dbError) {
+          console.error('[API] Database connection test failed:', dbError);
+          return res.status(500).json({ 
+            message: "Database connection unavailable",
+            error: process.env.NODE_ENV === 'development' ? String(dbError) : 'Internal server error'
+          });
+        }
       }
 
       console.log('[API] Calling storage.updateBotConfiguration');

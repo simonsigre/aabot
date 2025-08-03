@@ -12,6 +12,9 @@ if (process.env.NODE_ENV === 'production') {
   neonConfig.fetchConnectionCache = true;
 }
 
+console.log('[DATABASE] Neon configuration completed');
+console.log('[DATABASE] WebSocket constructor available:', !!neonConfig.webSocketConstructor);
+
 if (!process.env.DATABASE_URL) {
   throw new Error(
     "DATABASE_URL must be set. Did you forget to provision a database?",
