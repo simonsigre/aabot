@@ -1,0 +1,51 @@
+{
+  "display_information": {
+    "name": "AABot",
+    "description": "Apache Answer Bot - Search and vote on Apache Answer content directly from Slack",
+    "background_color": "#4A154B",
+    "long_description": "AABot integrates your Slack workspace with Apache Answer, allowing team members to search for questions and answers without leaving Slack. Features include search functionality via slash commands, interactive voting on answers, and real-time result displays with rich formatting."
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "AABot",
+      "always_online": true
+    },
+    "slash_commands": [
+      {
+        "command": "/aabot-search",
+        "description": "Search Apache Answer for questions and answers",
+        "usage_hint": "[search query]",
+        "should_escape": false
+      }
+    ]
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "chat:write",
+        "chat:write.public", 
+        "chat:write.customize",
+        "commands",
+        "channels:read",
+        "groups:read",
+        "im:read",
+        "mpim:read",
+        "users:read",
+        "app_mentions:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": [
+        "app_mention"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": true
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": true,
+    "token_rotation_enabled": false
+  }
+}
