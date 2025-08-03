@@ -222,11 +222,15 @@ export class DatabaseStorage implements IStorage {
       console.log('[STORAGE] Configuration encrypted successfully');
 
       console.log('[STORAGE] Updating database record');
+      console.log('[STORAGE] Database update payload keys:', Object.keys(encryptedUpdate));
+      
       const [updated] = await db
         .update(botConfigurations)
         .set({ ...encryptedUpdate, updatedAt: new Date() })
         .where(eq(botConfigurations.id, existing.id))
         .returning();
+        
+      console.log('[STORAGE] Database update result received');
       
       console.log('[STORAGE] Database updated, decrypting result');
       const result = this.decryptConfiguration(updated);

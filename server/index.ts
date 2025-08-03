@@ -7,12 +7,13 @@ import { sanitiseLogData, securityHeaders, createErrorResponse } from "./securit
 import { VERSION, BUILD_INFO } from "@shared/version";
 import { initializeGlobalSocketMode } from "./services/socketModeService";
 import { runDockerDiagnostics } from "./utils/dockerDiagnostics";
+import { waitForDatabaseReady } from "./utils/dbHealthCheck";
 
 const app = express();
 
 // Run diagnostics in Docker environment
 if (process.env.NODE_ENV === 'production' || process.env.DOCKER_ENV) {
-  runDockerDiagnostics();
+  runDockerDiagnostics().catch(console.error);
 }
 
 // Trust proxy configuration for rate limiting
@@ -38,7 +39,7 @@ app.use(helmet({
 const allowedOrigins = process.env.NODE_ENV === 'production' 
   ? [
       process.env.FRONTEND_URL,
-    ].filter(Boolean)
+    ].filter(Boolean) as string[]
   : true;
 
 app.use(cors({
@@ -139,9 +140,18 @@ app.use((req, res, next) => {
     port,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
+  }, async () => {
     log(`AABot v${VERSION} serving on port ${port}`);
     console.log(`[STARTUP] ${BUILD_INFO.name} v${BUILD_INFO.version} - ${BUILD_INFO.description}`);
+    
+    // In production (Docker), wait for database to be ready
+    if (process.env.NODE_ENV === 'production') {
+      console.log('[STARTUP] Waiting for database connection...');
+      const dbReady = await waitForDatabaseReady();
+      if (!dbReady) {
+        console.error('[STARTUP] Database connection failed, but continuing with startup...');
+      }
+    }
     
     // Initialize Socket Mode for Slack integration
     initializeGlobalSocketMode();

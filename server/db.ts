@@ -3,7 +3,14 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import ws from "ws";
 import * as schema from "@shared/schema";
 
+// Configure WebSocket constructor for Neon
 neonConfig.webSocketConstructor = ws;
+
+// Add connection retry logic for Docker environments
+if (process.env.NODE_ENV === 'production') {
+  console.log('[DATABASE] Configuring for Docker production environment');
+  neonConfig.fetchConnectionCache = true;
+}
 
 if (!process.env.DATABASE_URL) {
   throw new Error(

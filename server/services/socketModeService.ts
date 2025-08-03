@@ -15,15 +15,33 @@ export class SocketModeService {
 
   async initialize(): Promise<void> {
     try {
+      console.log('[SOCKET] Initializing Socket Mode service...');
+      
       // Get configuration from database (with fallback to environment variables)
       const config = await storage.getBotConfiguration();
+      console.log('[SOCKET] Configuration loaded:', !!config);
       
       // Check if we have Slack configuration
       const slackAppToken = config?.slackAppToken || process.env.SLACK_APP_TOKEN;
       const slackBotToken = config?.slackBotToken || process.env.SLACK_BOT_TOKEN;
       
+      console.log('[SOCKET] Tokens available:', { 
+        appToken: !!slackAppToken, 
+        botToken: !!slackBotToken 
+      });
+      
       if (!slackAppToken || !slackBotToken) {
         console.log('[SOCKET] Slack tokens not configured in database or environment, skipping Socket Mode initialization');
+        return;
+      }
+      
+      if (!slackAppToken.startsWith('xapp-')) {
+        console.error('[SOCKET] Invalid Slack App Token format - must start with "xapp-"');
+        return;
+      }
+      
+      if (!slackBotToken.startsWith('xoxb-')) {
+        console.error('[SOCKET] Invalid Slack Bot Token format - must start with "xoxb-"');
         return;
       }
 
@@ -34,9 +52,11 @@ export class SocketModeService {
       this.apacheAnswerService = new ApacheAnswerService(apiUrl, apiKey);
 
       // Initialize Socket Mode client using official @slack/socket-mode
+      console.log('[SOCKET] Creating SocketModeClient with app token');
       this.socketModeClient = new SocketModeClient({
         appToken: slackAppToken
       });
+      console.log('[SOCKET] SocketModeClient created successfully');
 
       // Set up event handlers using proper @slack/socket-mode pattern
       await this.setupEventHandlers();

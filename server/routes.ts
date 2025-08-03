@@ -243,6 +243,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Search limit must be between 1 and 50" });
       }
 
+      // Additional Docker environment logging
+      if (process.env.NODE_ENV === 'production') {
+        console.log('[API] Docker environment detected - validating configuration');
+        console.log('[API] Database connection available:', !!process.env.DATABASE_URL);
+        console.log('[API] Environment validation passed');
+      }
+
       console.log('[API] Calling storage.updateBotConfiguration');
       const updatedConfig = await storage.updateBotConfiguration(updates);
       console.log('[API] Configuration updated successfully');

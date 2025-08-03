@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
 
-export function runDockerDiagnostics(): void {
+export async function runDockerDiagnostics(): Promise<void> {
   console.log('=== Docker Environment Diagnostics ===');
   
   // Check environment variables
@@ -21,7 +21,7 @@ export function runDockerDiagnostics(): void {
   // Check file system permissions
   console.log('File System Check:');
   try {
-    const fs = require('fs');
+    const fs = await import('fs');
     const testPath = '/tmp/aabot-test';
     fs.writeFileSync(testPath, 'test');
     fs.unlinkSync(testPath);
