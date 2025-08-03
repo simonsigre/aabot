@@ -332,8 +332,7 @@ export function ConfigurationPanel() {
             <Button
               type="submit"
               disabled={updateConfig.isPending}
-              className="bg-slack-purple text-white hover:bg-slack-purple/90 px-6 py-2"
-              style={{display: 'block', visibility: 'visible'}}
+              className="bg-blue-600 text-white hover:bg-blue-700 border border-blue-700 px-6 py-2 font-medium"
             >
               <Save className="h-4 w-4 mr-2" />
               {updateConfig.isPending ? "Saving..." : "Save Configuration"}
